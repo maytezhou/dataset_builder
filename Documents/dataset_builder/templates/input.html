@@ -1,0 +1,93 @@
+<!-- templates/input.html -->
+{% extends 'layout.html' %} {% block content %}
+<h2>📝 Input Data</h2>
+
+<!-- Search -->
+<form method="GET" action="{{ url_for('input_data') }}">
+  <label for="search">🔍 Search existing questions:</label><br />
+  <input
+    type="text"
+    name="search"
+    placeholder="Type keyword..."
+    value="{{ request.args.get('search', '') }}"
+  />
+  <button type="submit">Search</button>
+</form>
+
+{% if results %}
+<h3>🔎 Search Results</h3>
+<table border="1" cellpadding="5">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Category</th>
+      <th>Question</th>
+      <th>Answer</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in results %}
+    <tr>
+      <td>{{ entry.id }}</td>
+      <td>{{ entry.category.name if entry.category else 'No Category' }}</td>
+      <td>{{ entry.field_data['question'] }}</td>
+      <td>{{ entry.field_data['answer'] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% elif request.args.get('search') %}
+<p style="color: red">
+  ❌ No results found for "{{ request.args.get('search') }}"
+</p>
+{% endif %}
+
+<hr />
+
+<!-- Add new data -->
+<form method="POST">
+  <label for="category">📁 Select Category:</label><br />
+  <select name="category" required>
+    {% for category in categories %}
+    <option value="{{ category.id }}">{{ category.name }}</option>
+    {% endfor %}
+  </select>
+
+  <br /><br />
+
+  <label for="question">❓ Question:</label><br />
+  <textarea name="question" rows="3" cols="50" required></textarea><br /><br />
+
+  <label for="answer">✅ Answer:</label><br />
+  <textarea name="answer" rows="3" cols="50" required></textarea><br /><br />
+
+  <button type="submit">➕ Add Entry</button>
+</form>
+
+<hr />
+
+<h3>📄 Current Dataset Entries</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Question</th>
+      <th>Answer</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in all_data %}
+    <tr>
+      <td>{{ entry.category.name }}</td>
+      <td>{{ entry.field_data['question'] }}</td>
+      <td>{{ entry.field_data['answer'] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<br />
+<form method="POST" action="{{ url_for('export_excel') }}">
+  <button type="submit">📥 Export Dataset to Excel</button>
+</form>
+{% endblock %}

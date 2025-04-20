@@ -1,0 +1,26 @@
+{% extends 'layout.html' %} {% block content %}
+<h2>📊 Debug: View All Entries in DB</h2>
+
+<table border="1" cellpadding="5">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Category ID</th>
+      <th>Field Data</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in entries %}
+    <tr>
+      <td>{{ entry.id }}</td>
+      <td>{{ entry.category_id }}</td>
+      <td>
+        {% for key, value in entry.field_data.items() %}
+        <strong>{{ key.capitalize() }}:</strong> {{ value }}<br />
+        {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,20 @@
+<!-- templates/home.html -->
+{% extends 'layout.html' %} {% block content %}
+<h2>Welcome to the Dataset Builder</h2>
+<p>
+  This tool helps you create and manage custom datasets (e.g. email datasets for
+  GAO at YZU).
+</p>
+<ul>
+  <li>
+    <strong>Setup Schema</strong>: Define how many fields your dataset should
+    have.
+  </li>
+  <li>
+    <strong>Input Data</strong>: Add entries with questions, answers, etc.
+  </li>
+  <li><strong>Export</strong>: (Coming soon) Export your dataset to Excel.</li>
+</ul>
+<p>Let’s get started by setting up your schema!</p>
+<a href="{{ url_for('setup') }}">➡️ Go to Setup</a>
+{% endblock %}

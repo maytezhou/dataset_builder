@@ -1,0 +1,27 @@
+<!-- templates/setup.html -->
+{% extends 'layout.html' %} {% block content %}
+<h2>🛠️ Setup Dataset Schema</h2>
+
+<form method="POST">
+  <label>Fields (comma separated):</label>
+  <input
+    type="text"
+    name="fields"
+    placeholder="question, answer, content"
+  /><br /><br />
+
+  <label>Categories (comma separated):</label>
+  <input
+    type="text"
+    name="category"
+    placeholder="Work Permit, Academic, FAQ"
+  /><br /><br />
+
+  <button type="submit">✅ Save Schema</button>
+</form>
+
+<p style="margin-top: 20px">
+  Go to <a href="{{ url_for('input_data') }}">Input Page</a> to begin entering
+  data once your schema is set.
+</p>
+{% endblock %}
